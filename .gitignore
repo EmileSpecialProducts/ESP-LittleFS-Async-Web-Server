@@ -2,11 +2,18 @@
 
 .pioenvs
 .piolibdeps
+.dummy
 .clang_complete
 .gcc-flags.json
 managed_components
 sdkconfig.*
 Thumbs.db
+
+CMakeLists.txt
+dependencies.lock
+
+build.txt
+build_upload.txt
 
 # Prerequisites
 *.d
