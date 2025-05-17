@@ -1,0 +1,60 @@
+{
+  "name": "ESP-LittleFS-Async-Web-Server",
+  "version": "2025.05.17",
+  "home_assistant_domain": "ESP-LittleFS-Async-Web-Server",
+  "funding_url": "https://github.com/EmileSpecialProducts/ESP-LittleFS-Async-Web-Server",
+  "builds": 
+  [
+    {
+      "chipFamily": "ESP8266",
+      "parts": [
+        { "path": "./esp8266_detect_/firmware.bin", "offset": 0}
+      ]
+    },
+    {
+      "chipFamily": "ESP32",
+      "parts": [
+        { "path": "./esp32_dio/bootloader.bin", "offset": 4096 },
+        { "path": "./esp32_dio/partitions.bin", "offset": 32768 },
+        { "path": "./esp32_dio/boot_app0.bin", "offset": 57344 },
+        { "path": "./esp32_dio/firmware.bin", "offset": 65536 }
+      ]
+    },
+    {
+      "chipFamily": "ESP32-C3",
+      "parts": [
+        { "path": "./esp32c3_detect_dio/bootloader.bin", "offset": 0 },
+        { "path": "./esp32c3_detect_dio/partitions.bin", "offset": 32768 },
+        { "path": "./esp32c3_detect_dio/boot_app0.bin", "offset": 57344 },
+        { "path": "./esp32c3_detect_dio/firmware.bin", "offset": 65536 }
+      ]
+    },
+    {
+      "chipFamily": "ESP32-S2",
+      "parts": [
+        { "path": "./esp32s2_detect_dio/bootloader.bin", "offset": 4096 },
+        { "path": "./esp32s2_detect_dio/partitions.bin","offset": 32768 },
+        { "path": "./esp32s2_detect_dio/boot_app0.bin", "offset": 57344 },
+        { "path": "./esp32s2_detect_dio/firmware.bin", "offset": 65536 }
+      ]
+    },
+    {
+      "chipFamily": "ESP32-S3",
+      "parts": [
+        { "path": "./esp32s3_detect_qio/bootloader.bin", "offset": 0 },
+        { "path": "./esp32s3_detect_qio/partitions.bin", "offset": 32768 },
+        { "path": "./esp32s3_detect_qio/boot_app0.bin", "offset": 57344 },
+        { "path": "./esp32s3_detect_qio/firmware.bin", "offset": 65536 }
+      ]
+    },
+    {
+      "chipFamily": "ESP32-C6",
+      "parts": [
+        { "path": "./esp32c6_detect_qio/bootloader.bin", "offset": 0 },
+        { "path": "./esp32c6_detect_qio/partitions.bin", "offset": 32768 },
+        { "path": "./esp32c6_detect_qio/boot_app0.bin", "offset": 57344 },
+        { "path": "./esp32c6_detect_qio/firmware.bin", "offset": 65536 }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="./favicon.ico">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>ESP Web tool</title>
+    <script type="module" src="https://unpkg.com/esp-web-tools@10.1.0/dist/web/install-button.js?module"></script>
+     
+</head>
+<body>
+    <main>
+        <section>
+
+            <h2>ESP-LittleFS-Async-Web-Server</h2>
+            <h3>Devices ESP8266-12E ESP-32 (S3/S2/C3/C6)</h3>
+            <p>
+                This will program the ESP-LittleFS-Async-Web-Server software to the ESP8266-12E ESP-32 (S3/S2/C3/C6) device.
+                <br> After programming you can connect to the AP Wifi name is ESP-xxxxxx 
+                <br>
+            </p>
+            <h3>Functions</h3>
+            <table id="Async-functions-table">
+                <thead>
+                    <tr>
+                        <th>Upload / Program </th>
+                    </tr>
+                    <tr>
+                        <th> For ESP32S2 use <a href="./uploadS2.html">This upload</a></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><esp-web-install-button manifest="./manifest.json">    
+                            <button class="danger" slot="activate">Button to Install on the Device </button>
+                        </esp-web-install-button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <h3>Information</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>...</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <div>
+                                You can find the Github at <a href="https://github.com/EmileSpecialProducts/ESP-LittleFS-Async-Web-Server">this</a> location
+                            </div>
+                            <div>
+                                You can find the ESPWebTool information at <a href="https://esphome.github.io/esp-web-tools/">this</a> location or the <a href="https://github.com/esphome/esp-web-tools/">GitHub</a>
+                            </div>
+                            <div>
+                                The ESPWebTool is based on the <a href="https://github.com/espressif/esptool-js">esptool-js</a>
+                            </div>
+                            <div>
+                                You can find a Serial monitor at <a href="https://www.serialterminal.com/">this</a> location
+                            </div>
+                            <div>
+                                Or this Serial monitor at <a href="https://tyeth.github.io/read-partitions-esptool-js/">this</a> location
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>   
+            </table>
+        </section>
+    </main>
+    <footer>
+        You can find the source of of this software at this github
+        <a href="https://github.com/EmileSpecialProducts/ESP-LittleFS-Async-Web-Server" target="_blank">archive</a>
+        .
+        <br>
+        <span id="version"></span><br>
+    </footer>
+</body>
+</html>
