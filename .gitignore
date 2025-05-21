@@ -8,6 +8,9 @@
 managed_components
 sdkconfig.*
 Thumbs.db
+build.txt
+build_upload.txt
+
 
 CMakeLists.txt
 dependencies.lock
