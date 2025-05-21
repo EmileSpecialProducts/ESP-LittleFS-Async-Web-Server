@@ -169,7 +169,7 @@ uint16_t Config_Reset_Counter = 0;
 int OTAUploadBusy = 0;
 
 File uploadFile;
-String message;
+
 
 void reply(AsyncWebServerRequest *request, int code, const char *type, const uint8_t *data, size_t len)
 {
@@ -177,10 +177,8 @@ void reply(AsyncWebServerRequest *request, int code, const char *type, const uin
     //request->send(code, type, data, len);
         AsyncWebServerResponse *response =
             request->beginResponse(code, type, data, len);
-
         // response->addHeader("Content-Encoding", "gzip");
         // response->addHeader("Content-Encoding", "7zip");
-        response->addHeader("Access-Control-Allow-Origin","*");    
         request->send(response);
 }
 
@@ -557,9 +555,13 @@ server.on("/edit", MY_HTTP_POST,
             reply(request, 404, "text/html", error404_html, sizeof(error404_html) - 1);
         }
     });
+  DefaultHeaders::Instance().addHeader("Access-Control-Allow-Origin", "*"); 
+  DefaultHeaders::Instance().addHeader("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE, HEAD");
+  DefaultHeaders::Instance().addHeader("Access-Control-Allow-Headers", "content-type");
   server.begin();  
   debugln("HTTP server started");
-
+  String message;
+  message.reserve(512);
   message = "Reboot from: ";
 #if defined(ESP8266)
   message += ESP.getChipId();
@@ -573,12 +575,18 @@ server.on("/edit", MY_HTTP_POST,
   message += " Rssi: " + String(WiFi.RSSI());
 
 #if not defined(ESP8266)
+
   message += " Total heap: " + String(ESP.getHeapSize() / 1024);
   message += " Free heap: " + String(ESP.getFreeHeap() / 1024);
   message += " Total PSRAM: " + String(ESP.getPsramSize() / 1024);
   message += " Free PSRAM: " + String(ESP.getFreePsram() / 1024);
+  message += " bytes getFreeHeap: " +String(ESP.getFreeHeap()) ; 
+  message += " byte esp_get_free_heap_size: "+ String(esp_get_free_heap_size())
+  message += " byte free internal_heap_size: "+ String(esp_get_free_internal_heap_size())
+  message += " byte ArduinoLoopTaskStackSize: "+ String(getArduinoLoopTaskStackSize());
+  message += " byte getSketchSize: " + String(ESP.getSketchSize());
   message += " Temperature: " + String(temperatureRead()) + " °C "; // internal TemperatureSensor
-#else
+  #else
   message += " FlashChipId: " + String(ESP.getFlashChipId());
   message += " FlashChipRealSize: " + String(ESP.getFlashChipRealSize());
 #endif
