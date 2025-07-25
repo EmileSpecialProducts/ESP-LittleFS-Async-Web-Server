@@ -35,6 +35,7 @@ def PostBuild(source, target, env):
     # print(env.subst("${__get_board_f_boot(__env__)}"))
     # print(env.subst("${__get_board_memory_type(__env__)}"))  #
     # print(env.subst("${__get_board_f_cpu(__env__)}"))
+    
     # print( board_config.get("build.psram_type", "qspi"))
     # print( board_config.get("build.memory_type", "AAAA"))
     # print( board_config.get("build.cpu_type", "AAAB"))
@@ -42,31 +43,32 @@ def PostBuild(source, target, env):
     # print(env.subst("$UPLOADCMD"))
     # Get source dir (.pio/name_env/)
     # source = env.get("PROJECT_BUILD_DIR") + "/" + env.get("PIOENV")
-    print("BOARD_MCU="+env.get("BOARD_MCU"))
-    if env.get("BOARD_MCU") != "esp8266":
-        print("ESP32_APP_OFFSET=" + env.get("ESP32_APP_OFFSET"))
-
+    # print("ESP32_APP_OFFSET=" + env.get("ESP32_APP_OFFSET"))
     platformpakkages = env.get("PROJECT_PACKAGES_DIR")
     board_boot_mode = env.subst("${__get_board_boot_mode(__env__)}")
     board = env.get("BOARD")
     board_mcu = env.get("BOARD_MCU")
     pioenv=env.get("PIOENV")
     source = env.get("PROJECT_BUILD_DIR") + "\\" + pioenv
+    endmb = source.rfind("MB")
+    startmb = source[:endmb+2].rfind("-")
+    flashsize=source[startmb+1:endmb+2]
+    print("flashsize = "+flashsize)
     print("BOARD_MCU " + board_mcu)
     print("BOARD_BOOT_MODE " + board_boot_mode)
     print("BOARD_F_CPU " + env.get("BOARD_F_CPU"))
     print("BOARD = " + board + " board_mcu = " + board_mcu + " board_boot_mode = " + board_boot_mode)
-    upload = env.subst("$UPLOADERFLAGS").split()
-    nextMB=False
-    flashsize="detect"
-    for x in upload:
-        # print("Upload :"+x)
-        if nextMB:  
-            flashsize = x
-            nextMB = False
-        if x == "--flash_size":
-            nextMB=True
-    print("flashsize = "+flashsize)
+    # This does not work from Ardino version V3.xx
+    #upload = env.subst("$UPLOADERFLAGS").split()
+    #nextMB=False
+    #for x in upload:
+    #    # print("Upload :"+x)
+    #    if nextMB:  
+    #        flashsize = x
+    #        nextMB = False
+    #    if x == "--flash_size":
+    #        nextMB=True
+    # print("flashsize = "+flashsize)
     # Save at destination docs/bins
     destination = os.getcwd() + "\\firmware" 
     if not os.path.exists(destination):
@@ -78,26 +80,24 @@ def PostBuild(source, target, env):
         os.mkdir(destination)
 
     print("destination = " + destination)
-    if env.get("BOARD_MCU") != "esp8266":
-        shutil.copyfile(source + "\\bootloader.bin", destination + "\\bootloader.bin")
-        shutil.copyfile(source + "\\partitions.bin", destination + "\\partitions.bin")
-        shutil.copyfile(
-            platformpakkages
-            + "\\framework-arduinoespressif32\\tools\\partitions\\boot_app0.bin",
-            destination + "\\boot_app0.bin",
-        )
 
+    shutil.copyfile(source + "\\bootloader.bin", destination + "\\bootloader.bin")
+    shutil.copyfile(source + "\\partitions.bin", destination + "\\partitions.bin")
+    shutil.copyfile(
+        platformpakkages
+        + "\\framework-arduinoespressif32\\tools\\partitions\\boot_app0.bin",
+        destination + "\\boot_app0.bin",
+    )
     shutil.copyfile(source + "\\firmware.bin", destination + "\\firmware.bin")
-    if env.get("BOARD_MCU") != "esp8266":
-        flash = env.subst("$FLASH_EXTRA_IMAGES")
-        print(flash)
-        parts = flash.split()
-        print("---------------------------------------------------------")
-        print(parts[0] + " " + str(int(parts[0], 16)) + " " + parts[1])
-        print(parts[2] + " " + str(int(parts[2], 16)) + " " + parts[3])
-        print(parts[4] + " " + str(int(parts[4], 16)) + " " + parts[5])
-        print(env.get("ESP32_APP_OFFSET") + " " + str(int(env.get("ESP32_APP_OFFSET"), 16)) + " " +source + "\\firmware.bin")
-        print("---------------------------------------------------------")
+    flash = env.subst("$FLASH_EXTRA_IMAGES")
+    # print(flash)
+    parts = flash.split()
+    print("---------------------------------------------------------")
+    print(parts[0] + " " + str(int(parts[0], 16)) + " " + parts[1])
+    print(parts[2] + " " + str(int(parts[2], 16)) + " " + parts[3])
+    print(parts[4] + " " + str(int(parts[4], 16)) + " " + parts[5])
+    print(env.get("ESP32_APP_OFFSET") + " " + str(int(env.get("ESP32_APP_OFFSET"), 16)) + " " +source + "\\firmware.bin")
+    print("---------------------------------------------------------")
 
 # env.AddPostAction("buildprog", PostBuild)
 
