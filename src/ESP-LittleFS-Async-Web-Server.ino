@@ -581,8 +581,8 @@ server.on("/edit", MY_HTTP_POST,
   message += " Total PSRAM: " + String(ESP.getPsramSize() / 1024);
   message += " Free PSRAM: " + String(ESP.getFreePsram() / 1024);
   message += " bytes getFreeHeap: " +String(ESP.getFreeHeap()) ; 
-  message += " byte esp_get_free_heap_size: "+ String(esp_get_free_heap_size())
-  message += " byte free internal_heap_size: "+ String(esp_get_free_internal_heap_size())
+  message += " byte esp_get_free_heap_size: "+ String(esp_get_free_heap_size());
+  message += " byte free internal_heap_size: "+ String(esp_get_free_internal_heap_size());
   message += " byte ArduinoLoopTaskStackSize: "+ String(getArduinoLoopTaskStackSize());
   message += " byte getSketchSize: " + String(ESP.getSketchSize());
   message += " Temperature: " + String(temperatureRead()) + " °C "; // internal TemperatureSensor
