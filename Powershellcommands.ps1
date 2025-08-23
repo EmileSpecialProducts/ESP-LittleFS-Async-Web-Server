@@ -48,6 +48,9 @@ Invoke-RestMethod -Method Get -URI "http://ESP-LittleFS-S3.local/list?dir=/"
 # create dir if the filename does not have a "." dot.
 Invoke-WebRequest -Method put -URI "http://ESP-LittleFS-S3.local/edit?path=/test9"
 Invoke-RestMethod -Method Get -URI "http://ESP-LittleFS-S3.local/list?dir=/"
+
+Invoke-RestMethod -Method Get -URI "http://ESP-LittleFS-S3.local/diskinfo"
+
 # creates file if the filename does have a "." dot.
 Invoke-WebRequest -Method put -URI "http://ESP-LittleFS-S3.local/edit?path=/test9/test.txt"
 Invoke-RestMethod -Method Get -URI "http://ESP-LittleFS-S3.local/list?dir=/test9"
@@ -90,6 +93,7 @@ $URI = "http://ESP-LittleFS-ESP.local"
 $URI = "http://ESP-LittleFS-S2.local"
 $URI = "http://ESP-LittleFS-S3.local"
 $URI = "http://ESP-LittleFS-C3.local"
+$URI = "http://ESP-LittleFS-C6.local"
 $URI = "http://ESP-LittleFS-12E.local"
 
 # Upload a file
