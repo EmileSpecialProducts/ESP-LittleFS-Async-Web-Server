@@ -18,29 +18,29 @@ function updatefilenme() {
     innerHTML += "  FreeKB = " + Math.floor(DiskInfo.freeBytes/1024)+" Used KB= "+ Math.floor(DiskInfo.usedBytes/1024)+" TotalKB = "+Math.floor(DiskInfo.totalBytes/1024);
   }
   innerHTML +=" </span>"
-  console.log(innerHTML);
+  //console.log(innerHTML);
   CurFile.innerHTML=innerHTML;
 }
 
 //get
 function httpGetDiskInfoRequest() {
-  console.log( GetDiskInfoHttp.status);
-  console.log( GetDiskInfoHttp.responseText.length); 
+  //console.log( GetDiskInfoHttp.status);
+  //console.log( GetDiskInfoHttp.responseText.length); 
     if (GetDiskInfoHttp.status == 200) {
       if(GetDiskInfoHttp.responseText.length>0 )
       {
         DiskInfo= JSON.parse(GetDiskInfoHttp.responseText);
-        console.log(GetDiskInfoHttp.responseText);
-        console.log(DiskInfo.totalBytes);
-        console.log(DiskInfo.usedBytes);
-        console.log(DiskInfo.freeBytes);
+        //console.log(GetDiskInfoHttp.responseText);
+        //console.log(DiskInfo.totalBytes);
+        //console.log(DiskInfo.usedBytes);
+        //console.log(DiskInfo.freeBytes);
       }
     }
   updatefilenme();
 }
   
 function GetDiskInfo() {
-   console.log("GetDiskInfo");
+   //console.log("GetDiskInfo");
     GetDiskInfoHttp = new XMLHttpRequest();
     GetDiskInfoHttp.onreadystatechange = httpGetDiskInfoRequest;
     GetDiskInfoHttp.open("GET", "diskinfo", true);
@@ -52,7 +52,7 @@ function updatecurrentfilenme(filename) {
   updatefilenme();
 }
 
-updatecurrentfilenme("/index.htm");
+updatecurrentfilenme("/index.html");
 document.head.appendChild(script);
 function createFileUploader(element, tree, editor) {
   var xmlHttp;
@@ -89,8 +89,10 @@ function createFileUploader(element, tree, editor) {
       if (xmlHttp.status != 200) alert("ERROR[" + xmlHttp.status + "]: " + xmlHttp.responseText);
       else {
         tree.refreshPath(path.value);
+
       }
     }
+    GetDiskInfo();
   }
   function createPath(p) {
     xmlHttp = new XMLHttpRequest();
@@ -139,7 +141,7 @@ function createFileUploader(element, tree, editor) {
     var ext = /(?:\.([^.]+))?$/.exec(filename)[1];
     var name = /(.*)\.[^.]+$/.exec(filename)[1];
     if (typeof name !== undefined) {
-      if (name.length > 8) name = name.substring(0, 8);
+      //if (name.length > 8) name = name.substring(0, 8);
       filename = name;
     }
     if (typeof ext !== undefined) {
@@ -152,7 +154,7 @@ function createFileUploader(element, tree, editor) {
     } else {
       path.value = path.value.substring(0, path.value.lastIndexOf("/") + 1) + filename;
     }
-    updatecurrentfilenme( path.value);
+    //updatecurrentfilenme( path.value);
   }
 }
 
@@ -437,7 +439,11 @@ function createTree(element, editor) {
     return function () {
       if (xmlHttp.readyState == 4) {
         //clear loading
-        if (xmlHttp.status == 200) addList(parent, path, JSON.parse(xmlHttp.responseText));
+        if (xmlHttp.status == 200) 
+        {
+          addList(parent, path, JSON.parse(xmlHttp.responseText));
+          GetDiskInfo();
+        }
       }
     }
   }
@@ -468,7 +474,7 @@ function createEditor(element, file, lang, theme, type) {
         case "css":
         case "scss":
         case "php":
-        case "html":
+        case "html": lang = "html"; break;
         case "json":
         case "xml":
           lang = ext;
@@ -565,7 +571,7 @@ function createEditor(element, file, lang, theme, type) {
   }
   return editor;
 }
-GetDiskInfo();
+
 function onBodyLoad() {
     var vars = {};
     var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (m, key, value) { vars[key] = value; });
@@ -574,5 +580,6 @@ function onBodyLoad() {
     if (vars.theme === undefined) vars["theme"] = "monokai"; // "textmate"
     var editor = createEditor("editor", vars.file, vars.lang, vars.theme);
     var tree = createTree("tree", editor);
-    createFileUploader("uploader", tree, editor);   
+    createFileUploader("uploader", tree, editor);
+    GetDiskInfo();
 };
