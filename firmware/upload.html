@@ -17,8 +17,14 @@
             <h3>Devices ESP8266-12E ESP-32 (S3/S2/C3/C6)</h3>
             <p>
                 This will program the ESP-LittleFS-Async-Web-Server software to the ESP8266-12E ESP-32 (S3/S2/C3/C6) device.
-                <br> After programming you can connect to the AP Wifi name is ESP-xxxxxx 
-                <br>
+                <br> After programming you can connect to the AP Wifi name is ESP-xxxxxx and set the Wifi SSID and Password.  
+                <br> After reboot you can connect to the device. ( sometimes you will need a second reboot )
+                <br><a href="http://ESP-LittleFS-12E.local">ESP-LittleFS-12E.local</a>
+                <br><a href="http://ESP-LittleFS-ESP.local">ESP-LittleFS-ESP.local</a>
+                <br><a href="http://ESP-LittleFS-C3.local">ESP-LittleFS-C3.local</a>
+                <br><a href="http://ESP-LittleFS-C6.local">ESP-LittleFS-C6.local</a>
+                <br><a href="http://ESP-LittleFS-S2.local">ESP-LittleFS-S2.local</a>
+                <br><a href="http://ESP-LittleFS-S3.local">ESP-LittleFS-S3.local</a>        
             </p>
             <h3>Functions</h3>
             <table id="Async-functions-table">
@@ -29,8 +35,26 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td><esp-web-install-button manifest="./manifest.json">    
-                            <button class="danger" slot="activate">Button to Install on the Device </button>
+                        <td><esp-web-install-button manifest="./manifest_4MB.json">    
+                            <button class="danger" slot="activate">Button to Install on 4MB Device </button>
+                        </esp-web-install-button>
+                        </td>
+                    </tr>
+					<tr>
+                        <td><esp-web-install-button manifest="./manifest_8MB.json">    
+                            <button class="danger" slot="activate">Button to Install on 8MB Device </button>
+                        </esp-web-install-button>
+                        </td>
+                    </tr>
+					<tr>
+                        <td><esp-web-install-button manifest="./manifest_16MB.json">    
+                            <button class="danger" slot="activate">Button to Install on 16MB Device </button>
+                        </esp-web-install-button>
+                        </td>
+                    </tr>
+					<tr>
+                        <td><esp-web-install-button manifest="./manifest_32MB.json">    
+                            <button class="danger" slot="activate">Button to Install on 32MB Device </button>
                         </esp-web-install-button>
                         </td>
                     </tr>

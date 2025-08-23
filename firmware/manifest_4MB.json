@@ -1,6 +1,6 @@
 {
   "name": "ESP-LittleFS-Async-Web-Server",
-  "version": "2025.08.16",
+  "version": "2025.08.23",
   "home_assistant_domain": "ESP-LittleFS-Async-Web-Server",
   "funding_url": "https://github.com/EmileSpecialProducts/ESP-LittleFS-Async-Web-Server",
   "builds": 
@@ -44,11 +44,11 @@
     {
       "chipFamily": "ESP32-S3",
       "parts": [
-        { "path": "./esp32s3_8MB_qio/bootloader.bin", "offset": 0 },
-        { "path": "./esp32s3_8MB_qio/partitions.bin", "offset": 32768 },
-        { "path": "./esp32s3_8MB_qio/boot_app0.bin", "offset": 57344 },
-        { "path": "./esp32s3_8MB_qio/firmware.bin", "offset": 65536 },
-        { "path": "./esp32s3_8MB_qio/littlefs.bin", "offset": 6750208 }
+        { "path": "./esp32s3_4MB_qio/bootloader.bin", "offset": 0 },
+        { "path": "./esp32s3_4MB_qio/partitions.bin", "offset": 32768 },
+        { "path": "./esp32s3_4MB_qio/boot_app0.bin", "offset": 57344 },
+        { "path": "./esp32s3_4MB_qio/firmware.bin", "offset": 65536 },
+        { "path": "./esp32s3_4MB_qio/littlefs.bin", "offset": 2686976 }
       ]
     },
     {
