@@ -15,7 +15,7 @@ function updatefilenme() {
   var innerHTML = '<span STYLE="font-family: arial; font-size: 14px;">  ' + Currentfilename;
   if (typeof DiskInfo !== 'undefined') 
   {
-    innerHTML += "  FreeKB = " + Math.floor(DiskInfo.freeBytes/1024)+" Used KB= "+ Math.floor(DiskInfo.usedBytes/1024)+" TotalKB = "+Math.floor(DiskInfo.totalBytes/1024);
+    innerHTML += "  Free = " + Math.floor(DiskInfo.freeBytes/1024)+"Kb Used = "+ Math.floor(DiskInfo.usedBytes/1024)+"Kb Total = "+Math.floor(DiskInfo.totalBytes/1024)+"Kb";
   }
   innerHTML +=" </span>"
   //console.log(innerHTML);
