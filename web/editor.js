@@ -483,7 +483,7 @@ function createEditor(element, file, lang, theme, type) {
     return lang;
   }
 
-  if (typeof file === "undefined") file = "/index.htm";
+  if (typeof file === "undefined") file = "/index.html";
 
   if (typeof lang === "undefined") {
     lang = getLangFromFilename(file);
