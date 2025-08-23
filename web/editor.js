@@ -1,8 +1,7 @@
-
-
 var link = document.createElement("link");
 link.rel = "stylesheet";
 link.href = "https://emilespecialproducts.github.io/ESP-LittleFS-Async-Web-Server/editor.css";
+//link.href = "editor.css";
 
 document.head.appendChild(link);
 
@@ -11,10 +10,46 @@ script.src = "https://cdnjs.cloudflare.com/ajax/libs/ace/1.43.2/ace.js";
 script.type = "text/javascript";
 var Currentfilename;
 var CurFile = document.createElement("span");
- 
+var DiskInfo;
+function updatefilenme() {
+  var innerHTML = '<span STYLE="font-family: arial; font-size: 14px;">  ' + Currentfilename;
+  if (typeof DiskInfo !== 'undefined') 
+  {
+    innerHTML += "  FreeKB = " + Math.floor(DiskInfo.freeBytes/1024)+" Used KB= "+ Math.floor(DiskInfo.usedBytes/1024)+" TotalKB = "+Math.floor(DiskInfo.totalBytes/1024);
+  }
+  innerHTML +=" </span>"
+  console.log(innerHTML);
+  CurFile.innerHTML=innerHTML;
+}
+
+//get
+function httpGetDiskInfoRequest() {
+  console.log( GetDiskInfoHttp.status);
+  console.log( GetDiskInfoHttp.responseText.length); 
+    if (GetDiskInfoHttp.status == 200) {
+      if(GetDiskInfoHttp.responseText.length>0 )
+      {
+        DiskInfo= JSON.parse(GetDiskInfoHttp.responseText);
+        console.log(GetDiskInfoHttp.responseText);
+        console.log(DiskInfo.totalBytes);
+        console.log(DiskInfo.usedBytes);
+        console.log(DiskInfo.freeBytes);
+      }
+    }
+  updatefilenme();
+}
+  
+function GetDiskInfo() {
+   console.log("GetDiskInfo");
+    GetDiskInfoHttp = new XMLHttpRequest();
+    GetDiskInfoHttp.onreadystatechange = httpGetDiskInfoRequest;
+    GetDiskInfoHttp.open("GET", "diskinfo", true);
+    GetDiskInfoHttp.send(null);
+}
+
 function updatecurrentfilenme(filename) {
   Currentfilename = filename;
-  CurFile.innerHTML = "  " + Currentfilename;
+  updatefilenme();
 }
 
 updatecurrentfilenme("/index.htm");
@@ -44,7 +79,8 @@ function createFileUploader(element, tree, editor) {
 
   var refrshfile = document.createElement("button");
   refrshfile.innerHTML = '<span STYLE="font-size:8.5pt">&#128472</span><span STYLE="font-size:10pt"> File</span>';
-  refrshfile.style.fontSize = "11px";
+  //refrshfile.innerHTML = '<span >&#128472</span><span> File</span>';
+  refrshfile.style.fontSize = "11.5px";
   document.getElementById(element).appendChild(refrshfile);  
   document.getElementById(element).appendChild(CurFile);
 
@@ -347,6 +383,7 @@ function createTree(element, editor) {
         case "jpg":
         case "gif":
         case "ico":
+        case "bmp":
           return true;
       }
     }
@@ -528,6 +565,7 @@ function createEditor(element, file, lang, theme, type) {
   }
   return editor;
 }
+GetDiskInfo();
 function onBodyLoad() {
     var vars = {};
     var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (m, key, value) { vars[key] = value; });
@@ -536,5 +574,5 @@ function onBodyLoad() {
     if (vars.theme === undefined) vars["theme"] = "monokai"; // "textmate"
     var editor = createEditor("editor", vars.file, vars.lang, vars.theme);
     var tree = createTree("tree", editor);
-    createFileUploader("uploader", tree, editor);
+    createFileUploader("uploader", tree, editor);   
 };
