@@ -400,11 +400,21 @@ void setup(void)
 
   server.on("/diskinfo", MY_HTTP_GET, [](AsyncWebServerRequest *request)
     {
+#if defined(ESP8266)
+    FSInfo fs_info;
+    LittleFS.info(fs_info);
+      String output="";
+        output+= "{\"totalBytes\":" + String(fs_info.totalBytes)+",";
+        output+= "\"usedBytes\":" + String(fs_info.usedBytes)+","; 
+        output+= "\"freeBytes\":" + String(fs_info.totalBytes-fs_info.usedBytes)+"}";            
+        request->send(200, "text/json", output);
+#else
       String output="";
         output+= "{\"totalBytes\":" + String(LittleFS.totalBytes())+",";
         output+= "\"usedBytes\":" + String(LittleFS.usedBytes())+","; 
         output+= "\"freeBytes\":" + String(LittleFS.totalBytes()-LittleFS.usedBytes())+"}";            
         request->send(200, "text/json", output);
+#endif
     });
 
 server.on("/list", MY_HTTP_GET, [](AsyncWebServerRequest *request)
