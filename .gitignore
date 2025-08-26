@@ -88,3 +88,4 @@ settings.json
 .travis.yml
 
 private
+build/*
