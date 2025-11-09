@@ -18,9 +18,9 @@ And then you can access the ESP on the folowing links ( or IP address )
 [ESP-LittleFS-12E.local](http://ESP-LittleFS-12E.local)<br>
 [ESP-LittleFS-ESP.local](http://ESP-LittleFS-ESP.local)<br>
 [ESP-LittleFS-C3.local](http://ESP-LittleFS-C3.local)<br>
-[ESP-LittleFS-C3.local](http://ESP-LittleFS-C6.local)<br>
-[ESP-LittleFS-C3.local](http://ESP-LittleFS-S2.local)<br>
-[ESP-LittleFS-C3.local](http://ESP-LittleFS-S3.local)<br>
+[ESP-LittleFS-C6.local](http://ESP-LittleFS-C6.local)<br>
+[ESP-LittleFS-S2.local](http://ESP-LittleFS-S2.local)<br>
+[ESP-LittleFS-S3.local](http://ESP-LittleFS-S3.local)<br>
 
 You can find a link the to [Youtube](https://youtu.be/SGOuzqJMnVM) for the SPIFFS version
 
