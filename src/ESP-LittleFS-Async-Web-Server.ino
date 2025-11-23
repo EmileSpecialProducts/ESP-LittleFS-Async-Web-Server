@@ -285,7 +285,7 @@ void setup(void)
   //in seconds
   wm.setTimeout(180);
 
-  res = wm.autoConnect(); // auto generated AP name from chipid
+  res = wm.autoConnect(host); // auto generated AP name from chipid
   // res = wm.autoConnect(DeviceName); // anonymous ap
   // res = wm.autoConnect("AutoConnectAP","password"); // password protected ap
   if (!res)
@@ -538,7 +538,7 @@ server.on("/edit", MY_HTTP_POST,
           }, 
         [](AsyncWebServerRequest *request, String filename, size_t index, uint8_t *data, size_t len, bool final)
           {
-            debugf("Upload[%s]: start=%u, len=%u, final=%d\n", filename.c_str(), index, len, final);
+            //debugf("Upload[%s]: start=%u, len=%u, final=%d\n", filename.c_str(), index, len, final);
             if (!index) {
             request->_tempFile = LittleFS.open("/"+ filename, "w+");
             }
