@@ -100,8 +100,12 @@ const char *host = "ESP-LittleFS-ESP";
 const char *host = "ESP-LittleFS-C2";
 #elif defined(CONFIG_IDF_TARGET_ESP32C3)
 const char *host = "ESP-LittleFS-C3";
+#elif defined(CONFIG_IDF_TARGET_ESP32C5)
+const char *host = "ESP-LittleFS-C5";
 #elif defined(CONFIG_IDF_TARGET_ESP32C6)
 const char *host = "ESP-LittleFS-C6";
+#elif defined(CONFIG_IDF_TARGET_ESP32C61)
+const char *host = "ESP-LittleFS-C61";
 #elif defined(CONFIG_IDF_TARGET_ESP32S2)
 const char *host = "ESP-LittleFS-S2";
 #elif defined(CONFIG_IDF_TARGET_ESP32S3)
@@ -130,7 +134,18 @@ const char *host = "ESP-LittleFS-S3";
 #ifndef LED_BUILTIN
   #define LED_BUILTIN 8
 #endif
+#elif defined(CONFIG_IDF_TARGET_ESP32C5)
+#ifndef PIN_BOOT
+  #define PIN_BOOT 28
+#endif
+#ifndef LED_BUILTIN
+  #define LED_BUILTIN 27
+#endif
 #elif defined(CONFIG_IDF_TARGET_ESP32C6)
+#ifndef PIN_BOOT
+  #define PIN_BOOT 9
+#endif
+#elif defined(CONFIG_IDF_TARGET_ESP32C61)
 #ifndef PIN_BOOT
   #define PIN_BOOT 9
 #endif
@@ -170,7 +185,12 @@ int OTAUploadBusy = 0;
 
 File uploadFile;
 
-
+/// @brief Sends an HTTP response with the specified status code, content type, and data payload
+/// @param request Pointer to the AsyncWebServerRequest object representing the incoming HTTP request to which the response will be sent
+/// @param code The HTTP status code to include in the response (e.g., 200 for success, 404 for not found)
+/// @param type The MIME type of the response content (e.g., "text/html", "application/json")
+/// @param data A pointer to the byte array containing the response body data to be sent to the client
+/// @param len The length of the data payload in bytes  
 void reply(AsyncWebServerRequest *request, int code, const char *type, const uint8_t *data, size_t len)
 {
     debugf("reply Len = %d code = %d Type= %s\n ", len, code, type);  
@@ -182,7 +202,9 @@ void reply(AsyncWebServerRequest *request, int code, const char *type, const uin
         request->send(response);
 }
 
-
+/// @brief Decodes a URL-encoded string
+/// @param text The URL-encoded string to decode
+/// @return A decoded version of the input string, where percent-encoded characters are converted back to their original form and '+' characters are replaced with spaces
 String urlDecode(const String &text)
 {
   String decoded = "";
@@ -215,6 +237,7 @@ String urlDecode(const String &text)
   return decoded;
 }
 
+
 const uint8_t Index_html[] PROGMEM = R"rawliteral(<!DOCTYPE html>
 <html lang="en">
   <head>
@@ -242,6 +265,11 @@ const uint8_t error404_html[] PROGMEM = R"rawliteral(<!DOCTYPE html>
 </html>
 )rawliteral";
 
+/// @brief Logs a message to both serial console and persistent storage
+/// @details Writes a string to the serial port (if DEBUG_PRINT is enabled) and appends it to /log.txt on LittleFS.
+///          Uses platform-specific file open modes (ESP8266 vs ESP32) for compatibility.
+/// @param Str The message to log as a String object
+
 void Log(String Str)
 {
   debugln(Str);
@@ -254,6 +282,7 @@ void Log(String Str)
   LogFile.close();
 }
 
+/// @brief Initializes the device, connects to WiFi, and sets up OTA updates and mDNS services
 void setup(void)
 {
   pinMode(PIN_BOOT, INPUT_PULLUP);
@@ -266,7 +295,24 @@ void setup(void)
 #endif
   setdebug(true);
   debug("\n");
-#ifdef USEWIFIMANAGER
+  // Initialize LittleFS before using the Wifimanager, as the LittleFS.begin() can take a long time if
+  // the filesystem needs to be formated 
+  // This is not a problem wen using the the esp-web-tools as this will write the filesystem before the first boot, 
+  // But if you are using the normal upload method the filesystem will be formated on the first boot and this can take a long time, so we do it before the wifi manager to avoid a long delay after the wifi manager has connected to the wifi 
+  debug("LittleFS : "); // LittleFS.begin can take 10 seconds to start formating
+#if defined(ESP8266)
+  if (!LittleFS.begin())
+#else
+  if (!LittleFS.begin(true)) // FORMAT_LITTLEFS_IF_FAILED
+#endif
+  {
+    debugln(" Mount Failed");
+  }
+  else
+  {
+    debugln(" Started ");
+  }
+  #ifdef USEWIFIMANAGER
   // WiFiManager, Local intialization. Once its business is done, there is no need to keep it around
   WiFiManager wm;
 
@@ -384,19 +430,6 @@ void setup(void)
       debugln("End Failed");
     } });
   ArduinoOTA.begin();
-  debug("LittleFS : "); // LittleFS.begin can take 10 seconds to start formating
-#if defined(ESP8266)
-  if (!LittleFS.begin())
-#else
-  if (!LittleFS.begin(true)) // FORMAT_LITTLEFS_IF_FAILED
-#endif
-  {
-    debugln(" Mount Failed");
-  }
-  else
-  {
-    debugln(" Started ");
-  }
 
   server.on("/diskinfo", MY_HTTP_GET, [](AsyncWebServerRequest *request)
     {
@@ -649,9 +682,9 @@ server.on("/edit", MY_HTTP_POST,
   NextTime = millis() + 1000;
 }
 
+/// @brief Main loop function that handles OTA updates, WiFi reconnection, and periodic tasks based on elapsed time
 void loop(void)
 {
-
   unsigned long Time = millis();
   yield();
   ArduinoOTA.handle();
