@@ -5,11 +5,11 @@
 </p>
 # ESP-LittleFS-Async-Web-Server
 
-This is the ESP-LittleFS-Async-Web-Server example for esp-arduino 8266/ESP32/S2/S3/C3/(C5)/C6 Not yet fuly supported ESP32-C2/C5/C61/P4.
+This is the ESP-LittleFS-Async-Web-Server example for esp-arduino 8266/ESP32/S2/S3/C3/C5/C6 Not yet fuly supported ESP32-C2/C61/P4.
 It supports WifiManager, LittleFS storage, logging, Editing of Text/HTML files on the ESP chip and OTA So a good starting point for any project. 
 
-This is based on Arduino Release v3.2.0 from pioarduino [(p)eople (i)nitiated (o)ptimized (arduino)](https://github.com/pioarduino/platform-espressif32) 
-To test this software you can use the [Web Programming portal](https://emilespecialproducts.github.io/ESP-LittleFS-Async-Web-Server/upload.html) to Program your ESP-Chip, No development software needed. 
+This is based on Arduino Release v3.3.7 from pioarduino [(p)eople (i)nitiated (o)ptimized (arduino)](https://github.com/pioarduino/platform-espressif32) 
+To test this software you can use the [Web Programming portal](https://emilespecialproducts.github.io/ESP-LittleFS-Async-Web-Server/upload.html) to Program your ESP-Chip, No development software needed. C2/C5 not yet supported 
 
 After programming you will need to setup the Wifi connection this is done by connection to the ESP Access Point (ESP-xxxxxxx)
 And set up your Wifi.
@@ -17,6 +17,7 @@ And then you can access the ESP on the folowing links ( or IP address )
 
 [ESP-LittleFS-12E.local](http://ESP-LittleFS-12E.local)<br>
 [ESP-LittleFS-ESP.local](http://ESP-LittleFS-ESP.local)<br>
+[ESP-LittleFS-C2.local](http://ESP-LittleFS-C2.local)<br>
 [ESP-LittleFS-C3.local](http://ESP-LittleFS-C3.local)<br>
 [ESP-LittleFS-C3.local](http://ESP-LittleFS-C5.local)<br>
 [ESP-LittleFS-C6.local](http://ESP-LittleFS-C6.local)<br>
