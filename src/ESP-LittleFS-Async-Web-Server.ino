@@ -58,27 +58,20 @@
 #include <FS.h>
 #endif
 
-// https://github.com/tzapu/WiFiManager/issues/1530
-typedef enum {
-  MY_HTTP_GET = 0b00000001,
-  MY_HTTP_POST = 0b00000010,
-  MY_HTTP_DELETE = 0b00000100,
-  MY_HTTP_PUT = 0b00001000,
-  MY_HTTP_PATCH = 0b00010000,
-  MY_HTTP_HEAD = 0b00100000,
-  MY_HTTP_OPTIONS = 0b01000000,
-  MY_HTTP_ANY = 0b01111111,
-} MyWebRequestMethod;
-
 #define DEBUG_PRINT  // manages most of the print and println debug, not all but most
 
-#ifdef DEBUG_PRINT
+#if defined(DEBUG_PRINT)
 #define debug_begin(...) Serial.begin(__VA_ARGS__)
 #define setdebug(...) Serial.setDebugOutput(__VA_ARGS__)
 #define debug(...) Serial.print(__VA_ARGS__)
 #define debugln(...) Serial.println(__VA_ARGS__)
 #define debugf(...) Serial.printf(__VA_ARGS__)
 #else
+#undef debug_begin
+#undef debug
+#undef debugln
+#undef setdebug
+#undef debugf
 #define debug_begin(...) ;
 #define debug(...) ;
 #define debugln(...) ;
@@ -168,6 +161,7 @@ const char *host = "ESP-LittleFS-S3";
 #ifdef LED_BUILTIN
 #define PIN_LED LED_BUILTIN
 #else
+#undef PIN_LED
 #define PIN_LED -1
 #endif
 
@@ -431,7 +425,7 @@ void setup(void)
     } });
   ArduinoOTA.begin();
 
-  server.on("/diskinfo", MY_HTTP_GET, [](AsyncWebServerRequest *request)
+  server.on("/diskinfo", AsyncWebRequestMethod::HTTP_GET, [](AsyncWebServerRequest *request)
     {
 #if defined(ESP8266)
     FSInfo fs_info;
@@ -450,7 +444,7 @@ void setup(void)
 #endif
     });
 
-server.on("/list", MY_HTTP_GET, [](AsyncWebServerRequest *request)
+server.on("/list", AsyncWebRequestMethod::HTTP_GET, [](AsyncWebServerRequest *request)
     {
 #if defined(ESP8266)
         int cnt = 0;
@@ -507,7 +501,7 @@ server.on("/list", MY_HTTP_GET, [](AsyncWebServerRequest *request)
 #endif
       });
       
-server.on("/edit", MY_HTTP_PUT, [](AsyncWebServerRequest *request)
+server.on("/edit", AsyncWebRequestMethod::HTTP_PUT, [](AsyncWebServerRequest *request)
 {
   debugln("Create ");
   if (request->args() == 0)
@@ -536,7 +530,7 @@ server.on("/edit", MY_HTTP_PUT, [](AsyncWebServerRequest *request)
   request->send(200, "text/plain", ""); 
 });
 
-server.on("/edit", MY_HTTP_DELETE, [](AsyncWebServerRequest *request)
+server.on("/edit", AsyncWebRequestMethod::HTTP_DELETE, [](AsyncWebServerRequest *request)
 {
   debugln("Delete ");
   if (request->args() == 0)
@@ -561,7 +555,7 @@ server.on("/edit", MY_HTTP_DELETE, [](AsyncWebServerRequest *request)
   } 
 });
 
-server.on("/edit", MY_HTTP_POST, 
+server.on("/edit", AsyncWebRequestMethod::HTTP_POST, 
         [](AsyncWebServerRequest *request)
           {
             debugln("File upload completed " + request->url());
@@ -581,13 +575,13 @@ server.on("/edit", MY_HTTP_POST,
             } 
           }
     );
-    server.on("/", MY_HTTP_GET, [](AsyncWebServerRequest *request)
+    server.on("/", AsyncWebRequestMethod::HTTP_GET, [](AsyncWebServerRequest *request)
     { request->redirect("/index.html"); });
     
     server.onNotFound([](AsyncWebServerRequest *request)
     { 
         debugf("url NotFound %s , Method =%s\n", request->url().c_str(), request->methodToString());
-        if (request->method() == HTTP_GET)
+        if (request->method() == AsyncWebRequestMethod::HTTP_GET)
         {
             if (LittleFS.exists(request->url())) // exists will give a error in the error log see: https://github.com/espressif/arduino-esp32/issues/7615
             {
@@ -602,7 +596,7 @@ server.on("/edit", MY_HTTP_POST,
                 request->redirect("/error404.html");
             }
         }
-        else if (request->method() == MY_HTTP_POST)
+        else if (request->method() == AsyncWebRequestMethod::HTTP_POST)
         {
             reply(request, 404, "text/html", error404_html, sizeof(error404_html) - 1);
         }
