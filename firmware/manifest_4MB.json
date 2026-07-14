@@ -44,7 +44,7 @@
     {
       "chipFamily": "ESP32-C5",
       "parts": [
-        { "path": "./esp32c5_4MB_qio/bootloader.bin", "offset": 0 },
+        { "path": "./esp32c5_4MB_qio/bootloader.bin", "offset": 8192 },
         { "path": "./esp32c5_4MB_qio/partitions.bin", "offset": 32768 },
         { "path": "./esp32c5_4MB_qio/boot_app0.bin", "offset": 57344 },
         { "path": "./esp32c5_4MB_qio/firmware.bin", "offset": 65536 },
