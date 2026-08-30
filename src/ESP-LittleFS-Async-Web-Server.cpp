@@ -35,7 +35,9 @@
 #include <AsyncTCP.h> // https://github.com/ESP32Async/AsyncTCP
 #endif
 
+#if !defined(NO_OTA)
 #include <ArduinoOTA.h>  // ArduinoOTA by Arduino, Juraj  https://github.com/JAndrassy/ArduinoOTA
+#endif
 
 #if defined(ESP8266)
 // https://github.com/tzapu/WiFiManager/issues/1530
@@ -175,8 +177,9 @@ unsigned long currentTimeSeconds = 0;
 unsigned long NextTime = 0;
 
 uint16_t Config_Reset_Counter = 0;
+#if !defined(NO_OTA)
 int OTAUploadBusy = 0;
-
+#endif
 File uploadFile;
 
 /// @brief Sends an HTTP response with the specified status code, content type, and data payload
@@ -378,7 +381,7 @@ void setup(void)
     debug(".local or http://");
     debugln(WiFi.localIP());
   }
-
+#if !defined(NO_OTA)
   // Port defaults to 3232
   // ArduinoOTA.setPort(3232);
 
@@ -424,7 +427,7 @@ void setup(void)
       debugln("End Failed");
     } });
   ArduinoOTA.begin();
-
+#endif
   server.on("/diskinfo", AsyncWebRequestMethod::HTTP_GET, [](AsyncWebServerRequest *request)
     {
 #if defined(ESP8266)
@@ -681,12 +684,13 @@ void loop(void)
 {
   unsigned long Time = millis();
   yield();
+#if !defined(NO_OTA)
   ArduinoOTA.handle();
   if (OTAUploadBusy == 0)
   { // Do not do things that take time when OTA is busy
     //server.handleClient();
   }
-
+#endif
   if (PreviousTimeDay != (currentTimeSeconds / (60 * 60 * 24)))
   { // Day Loop
     PreviousTimeDay = (currentTimeSeconds / (60 * 60 * 24));
@@ -714,8 +718,10 @@ void loop(void)
       digitalWrite(PIN_LED, 1);
     else
       digitalWrite(PIN_LED, 0);
+#if !defined(NO_OTA)
     if (OTAUploadBusy > 0)
       OTAUploadBusy--;
+#endif
 #ifdef USEWIFIMANAGER
     if (digitalRead(PIN_BOOT) == LOW)
     {
