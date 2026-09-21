@@ -18,8 +18,8 @@ def PostBuild(source, target, env):
     # https://github.com/usini/esp32_platformio/tree/main
     # pio run -t envdump  // will give all the avalabe environment flags.
 
-    print("PROJECT_DIR " + env.get("PROJECT_DIR"))
-    print("PROJECT_BUILD_DIR " + env.get("PROJECT_BUILD_DIR"))
+    # print("PROJECT_DIR " + env.get("PROJECT_DIR"))
+    # print("PROJECT_BUILD_DIR " + env.get("PROJECT_BUILD_DIR"))
     # print("PROJECT_DATA_DIR " + env.get("PROJECT_DATA_DIR"))
     # print("BOARD " + env.get("BOARD"))
     # print("BUILD_TYPE " + env.get("BUILD_TYPE"))
@@ -75,8 +75,8 @@ def PostBuild(source, target, env):
         print("partition_file " , partition_file)   
         mklittlefs=env.get("PROJECT_CORE_DIR")+"/tools/tool-mklittlefs/mklittlefs.exe"
         print("MKSPIFFSTOOL ",mklittlefs)
-        #littlefsdir = os.getcwd() + "/payloads"
-        littlefsdir = env.get("PROJECT_DATA_DIR")     
+        #littlefsdir = os.getcwd() + "/littlefs"    
+        littlefsdir = env.get("PROJECT_DATA_DIR")
         # mklittlefs doc -> https://github.com/jason2866/mklittlefs
         #env.Execute(mklittlefs +" -a -c "+littlefsdir + " -s "+ str(littlefs_size) + " " + destination + "/littlefs.bin")
         # list all the files 
@@ -132,9 +132,10 @@ def PostBuild(source, target, env):
         destination = os.getcwd() + "/firmware" 
         if not os.path.exists(destination):
             os.mkdir(destination)
-        destination = (
-            destination + "/" + board_mcu + "_" + flashsize + "_" + board_boot_mode
-        )  
+        destination = (destination + "/" +pioenv ) 
+        #destination = (
+        #    destination + "/" + board_mcu + "_" + flashsize + "_" + board_boot_mode
+        #)  
         if not os.path.exists(destination):
             os.mkdir(destination)
         print("destination = " + destination)
@@ -162,7 +163,8 @@ def PostBuild(source, target, env):
         ## Bit this will will not build in the same upload command.
         env.Execute(mklittlefs +" -a -c "+littlefsdir + " -s "+ str(littlefs_size) + " " + source + "/littlefs.bin")
         # list all the files 
-        env.Execute(mklittlefs +" -l " + source + "/littlefs.bin")    
+        # List is not working if the littlefs.bin file contains directories, so it is not possible to use the -l option to list the files in the littlefs.bin file.
+        # env.Execute(mklittlefs +" -l " + source + "/littlefs.bin")    
         print("littlefs From:"+ source + "/littlefs.bin" + " To: ",destination + "/littlefs.bin")
         shutil.copyfile(source + "/littlefs.bin", destination + "/littlefs.bin")
         ################################################################################

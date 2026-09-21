@@ -14,61 +14,61 @@
     {
       "chipFamily": "ESP32",
       "parts": [
-        { "path": "./esp32_16MB_dio/bootloader.bin", "offset": 4096 },
-        { "path": "./esp32_16MB_dio/partitions.bin", "offset": 32768 },
-        { "path": "./esp32_16MB_dio/boot_app0.bin", "offset": 57344 },
-        { "path": "./esp32_16MB_dio/firmware.bin", "offset": 65536 },
-        { "path": "./esp32_16MB_dio/littlefs.bin", "offset": 2686976 }
+        { "path": "./esp32_16MB/bootloader.bin", "offset": 4096 },
+        { "path": "./esp32_16MB/partitions.bin", "offset": 32768 },
+        { "path": "./esp32_16MB/boot_app0.bin", "offset": 57344 },
+        { "path": "./esp32_16MB/firmware.bin", "offset": 65536 },
+        { "path": "./esp32_16MB/littlefs.bin", "offset": 2686976 }
       ]
     },
     {
       "chipFamily": "ESP32-C3",
       "parts": [
-        { "path": "./esp32c3_16MB_dio/bootloader.bin", "offset": 0 },
-        { "path": "./esp32c3_16MB_dio/partitions.bin", "offset": 32768 },
-        { "path": "./esp32c3_16MB_dio/boot_app0.bin", "offset": 57344 },
-        { "path": "./esp32c3_16MB_dio/firmware.bin", "offset": 65536 },
-        { "path": "./esp32c3_16MB_dio/littlefs.bin", "offset": 2686976 }
+        { "path": "./esp32c3_16MB/bootloader.bin", "offset": 0 },
+        { "path": "./esp32c3_16MB/partitions.bin", "offset": 32768 },
+        { "path": "./esp32c3_16MB/boot_app0.bin", "offset": 57344 },
+        { "path": "./esp32c3_16MB/firmware.bin", "offset": 65536 },
+        { "path": "./esp32c3_16MB/littlefs.bin", "offset": 2686976 }
       ]
     },
     {
       "chipFamily": "ESP32-C5",
       "parts": [
-        { "path": "./esp32c5_16MB_qio/bootloader.bin", "offset": 8192 },
-        { "path": "./esp32c5_16MB_qio/partitions.bin", "offset": 32768 },
-        { "path": "./esp32c5_16MB_qio/boot_app0.bin", "offset": 57344 },
-        { "path": "./esp32c5_16MB_qio/firmware.bin", "offset": 65536 },
-        { "path": "./esp32c5_16MB_qio/littlefs.bin", "offset": 2686976 }
+        { "path": "./esp32c5_16MB/bootloader.bin", "offset": 8192 },
+        { "path": "./esp32c5_16MB/partitions.bin", "offset": 32768 },
+        { "path": "./esp32c5_16MB/boot_app0.bin", "offset": 57344 },
+        { "path": "./esp32c5_16MB/firmware.bin", "offset": 65536 },
+        { "path": "./esp32c5_16MB/littlefs.bin", "offset": 2686976 }
       ]
     },
     {
       "chipFamily": "ESP32-C6",
       "parts": [
-        { "path": "./esp32c6_16MB_qio/bootloader.bin", "offset": 0 },
-        { "path": "./esp32c6_16MB_qio/partitions.bin", "offset": 32768 },
-        { "path": "./esp32c6_16MB_qio/boot_app0.bin", "offset": 57344 },
-        { "path": "./esp32c6_16MB_qio/firmware.bin", "offset": 65536 },
-        { "path": "./esp32c6_16MB_qio/littlefs.bin", "offset": 2686976 }
+        { "path": "./esp32c6_16MB/bootloader.bin", "offset": 0 },
+        { "path": "./esp32c6_16MB/partitions.bin", "offset": 32768 },
+        { "path": "./esp32c6_16MB/boot_app0.bin", "offset": 57344 },
+        { "path": "./esp32c6_16MB/firmware.bin", "offset": 65536 },
+        { "path": "./esp32c6_16MB/littlefs.bin", "offset": 2686976 }
       ]
     }
     {
       "chipFamily": "ESP32-S2",
       "parts": [
-        { "path": "./esp32s2_16MB_dio/bootloader.bin", "offset": 4096 },
-        { "path": "./esp32s2_16MB_dio/partitions.bin","offset": 32768 },
-        { "path": "./esp32s2_16MB_dio/boot_app0.bin", "offset": 57344 },
-        { "path": "./esp32s2_16MB_dio/firmware.bin", "offset": 65536 },
-        { "path": "./esp32s2_16MB_dio/littlefs.bin", "offset": 2686976 }
+        { "path": "./esp32s2_16MB/bootloader.bin", "offset": 4096 },
+        { "path": "./esp32s2_16MB/partitions.bin","offset": 32768 },
+        { "path": "./esp32s2_16MB/boot_app0.bin", "offset": 57344 },
+        { "path": "./esp32s2_16MB/firmware.bin", "offset": 65536 },
+        { "path": "./esp32s2_16MB/littlefs.bin", "offset": 2686976 }
       ]
     },
     {
       "chipFamily": "ESP32-S3",
       "parts": [
-        { "path": "./esp32s3_16MB_qio/bootloader.bin", "offset": 0 },
-        { "path": "./esp32s3_16MB_qio/partitions.bin", "offset": 32768 },
-        { "path": "./esp32s3_16MB_qio/boot_app0.bin", "offset": 57344 },
-        { "path": "./esp32s3_16MB_qio/firmware.bin", "offset": 65536 },
-        { "path": "./esp32s3_16MB_qio/littlefs.bin", "offset": 2686976 }
+        { "path": "./esp32s3_16MB/bootloader.bin", "offset": 0 },
+        { "path": "./esp32s3_16MB/partitions.bin", "offset": 32768 },
+        { "path": "./esp32s3_16MB/boot_app0.bin", "offset": 57344 },
+        { "path": "./esp32s3_16MB/firmware.bin", "offset": 65536 },
+        { "path": "./esp32s3_16MB/littlefs.bin", "offset": 2686976 }
       ]
     }
   ]

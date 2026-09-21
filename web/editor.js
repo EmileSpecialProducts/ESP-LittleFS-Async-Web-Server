@@ -6,16 +6,23 @@ link.href = "https://emilespecialproducts.github.io/ESP-LittleFS-Async-Web-Serve
 document.head.appendChild(link);
 
 var script = document.createElement("script");
-script.src = "https://cdnjs.cloudflare.com/ajax/libs/ace/1.43.2/ace.js";
+script.src = "https://cdnjs.cloudflare.com/ajax/libs/ace/1.44.0/ace.js";
 script.type = "text/javascript";
 var Currentfilename;
 var CurFile = document.createElement("span");
 var DiskInfo;
+
+function spacein_KB_MB_GB(bytes) {
+  if (bytes < 1024) return bytes.toFixed(2) + " Bytes";
+  else if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(2) + " KB";
+  else if (bytes < 1024 * 1024 * 1024) return (bytes / (1024 * 1024)).toFixed(2) + " MB";
+  else return (bytes / (1024 * 1024 * 1024)).toFixed(2) + " GB";
+}
 function updatefilenme() {
   var innerHTML = '<span STYLE="font-family: arial; font-size: 14px;">  ' + Currentfilename;
   if (typeof DiskInfo !== 'undefined') 
   {
-    innerHTML += "  Free = " + Math.floor(DiskInfo.freeBytes/1024)+"Kb Used = "+ Math.floor(DiskInfo.usedBytes/1024)+"Kb Total = "+Math.floor(DiskInfo.totalBytes/1024)+"Kb";
+    innerHTML += "  Free = " + spacein_KB_MB_GB(DiskInfo.freeBytes) + " Used = " + spacein_KB_MB_GB(DiskInfo.usedBytes) + " Total = " + spacein_KB_MB_GB(DiskInfo.totalBytes);
   }
   innerHTML +=" </span>"
   //console.log(innerHTML);
@@ -349,6 +356,21 @@ function createTree(element, editor) {
   function addList(parent, path, items) {
     var list = document.createElement("ul");
     parent.appendChild(list);
+    //console.log(items);
+    items.sort((a, b) => {
+        const typeA = a.type.toUpperCase(); // ignore upper and lowercase
+        const typeB = b.type.toUpperCase(); // ignore upper and lowercase
+        if (typeA < typeB) return -1;
+        if (typeA > typeB) return 1;        
+            const nameA = a.name.toUpperCase(); // ignore upper and lowercase
+            const nameB = b.name.toUpperCase(); // ignore upper and lowercase
+            if (nameA < nameB) return -1;
+            if (nameA > nameB) return 1;        
+            // names must be equal
+            return 0;
+      });
+    //console.log(items);
+
     var ll = items.length;
     for (var i = 0; i < ll; i++) {
       var item = items[i];
@@ -372,26 +394,62 @@ function createTree(element, editor) {
         case "html":
         case "js":
         case "json":
-        case "c":
-        case "h":
-        case "cpp":
         case "css":
         case "xml":
+        case "csv":
+        case "md":
+        case "markdown":
+        case "log":
+        case "ini":
+        case "conf":
+        case "cfg":
+        case "h":
+        case "cpp":
+        case "c":
+        case "hpp":
+        case "py":
+        case "yml":
+        case "yaml":
+        case "sh":
+        case "bat":
+        case "ps1":
+        case "env":
+        case "sql":
+        case "lua":
+        case "php":
+        case "r":
+        case "svg":
+        case "gradle":
+        case "properties":
           return true;
       }
     }
     return false;
   }
-
   function isImageFile(path) {
     var ext = /(?:\.([^.]+))?$/.exec(path)[1];
     if (typeof ext !== undefined) {
       switch (ext) {
         case "png":
         case "jpg":
+        case "jpeg":
+        case "jpe":
+        case "jif":
+        case "jfif":  
         case "gif":
         case "ico":
         case "bmp":
+        case "apng":
+        case "avif":
+        case "webp":
+        case "svg":
+        case "tiff":
+        case "tif":
+        case "heic":
+        case "heif":
+        case "avif":
+        case "jfif":
+        case "xbm":
           return true;
       }
     }
