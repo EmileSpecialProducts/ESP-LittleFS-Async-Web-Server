@@ -292,6 +292,15 @@ void setup(void)
 #endif
   setdebug(true);
   debug("\n");
+
+  #if !defined(ESP8266) 
+  if (psramInit()) {
+    debugf("PSRAM size: %u bytes\n", ESP.getPsramSize());
+  } else {
+    debugln("PSRAM is not found.");
+  }
+#endif
+
   // Initialize LittleFS before using the Wifimanager, as the LittleFS.begin() can take a long time if
   // the filesystem needs to be formated 
   // This is not a problem wen using the the esp-web-tools as this will write the filesystem before the first boot, 
@@ -316,7 +325,7 @@ void setup(void)
   // reset settings - wipe stored credentials for testing
   // these are stored by the esp library
   //  wm.resetSettings();
-
+  wm.setHostname(host);
   // Automatically connect using saved credentials,
   // if connection fails, it starts an access point with the specified name ( "AutoConnectAP"),
   // if empty will auto generate SSID, if password is blank it will be anonymous AP (wm.autoConnect())
