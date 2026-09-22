@@ -59,7 +59,7 @@ def mytarget_callback(*args, **kwargs):
     board_mcu = env.get("BOARD_MCU")
     print("pioenv ",pioenv )
     env.Execute("pio run -e " + pioenv +" -t buildfs")
-    env.Execute("pio run -e " + pioenv +" -t build")
+    env.Execute("pio run -e " + pioenv +" -t upload") # using Upload as build will not build the firmware
 
 print( "Adding the target: all")
 env.AddCustomTarget(
