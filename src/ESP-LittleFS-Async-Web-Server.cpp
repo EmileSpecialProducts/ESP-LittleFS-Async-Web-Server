@@ -291,16 +291,14 @@ void setup(void)
   debug_begin(115200, SERIAL_8N1, RX, TX);
 #endif
   setdebug(true);
-  debug("\n");
-
-  #if !defined(ESP8266) 
+  debug("\n"); 
+#if !defined(ESP8266) 
   if (psramInit()) {
     debugf("PSRAM size: %u bytes\n", ESP.getPsramSize());
   } else {
     debugln("PSRAM is not found.");
   }
 #endif
-
   // Initialize LittleFS before using the Wifimanager, as the LittleFS.begin() can take a long time if
   // the filesystem needs to be formated 
   // This is not a problem wen using the the esp-web-tools as this will write the filesystem before the first boot, 
@@ -312,7 +310,7 @@ void setup(void)
   if (!LittleFS.begin(true)) // FORMAT_LITTLEFS_IF_FAILED
 #endif
   {
-    debugln(" Mount Failed");
+    debugln(" Mount Failed!");
   }
   else
   {
