@@ -38,7 +38,7 @@
         { "path": "./esp32c6_16MB/firmware.factory.bin", "offset": 0 },
         { "path": "./esp32c6_16MB/littlefs.bin", "offset": 2686976 }
       ]
-    }
+    },
     {
       "chipFamily": "ESP32-S2",
       "parts": [
