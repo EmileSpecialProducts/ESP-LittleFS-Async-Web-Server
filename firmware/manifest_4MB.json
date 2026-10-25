@@ -15,7 +15,7 @@
     {
       "chipFamily": "ESP32",
       "parts": [
-        { "path": "./esp32_4MB/firmware.factory.bin", "offset": 4096 },
+        { "path": "./esp32_4MB/firmware.factory.bin", "offset": 0 },
         { "path": "./esp32_4MB/littlefs.bin", "offset": 2686976 }
       ]
     },
@@ -36,7 +36,7 @@
     {
       "chipFamily": "ESP32-C5",
       "parts": [
-        { "path": "./esp32c5_4MB/firmware.factory.bin", "offset": 8192 },
+        { "path": "./esp32c5_4MB/firmware.factory.bin", "offset": 0 },
         { "path": "./esp32c5_4MB/littlefs.bin", "offset": 2031616 }
       ]
     },
@@ -50,7 +50,7 @@
     {
       "chipFamily": "ESP32-S2",
       "parts": [
-        { "path": "./esp32s2_4MB/firmware.factory.bin", "offset": 4096 },
+        { "path": "./esp32s2_4MB/firmware.factory.bin", "offset": 0 },
         { "path": "./esp32s2_4MB/littlefs.bin", "offset": 2686976 }
       ]
     },
