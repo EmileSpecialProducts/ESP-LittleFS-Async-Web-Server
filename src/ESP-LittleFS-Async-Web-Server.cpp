@@ -105,6 +105,8 @@ const char *host = "ESP-LittleFS-C61";
 const char *host = "ESP-LittleFS-S2";
 #elif defined(CONFIG_IDF_TARGET_ESP32S3)
 const char *host = "ESP-LittleFS-S3";
+#elif defined(CONFIG_IDF_TARGET_ESP32S31)
+const char *host = "ESP-LittleFS-S31";
 #endif
 
 #if defined(ESP8266)
@@ -157,6 +159,13 @@ const char *host = "ESP-LittleFS-S3";
 #endif
 #if not defined(PIN_NEOPIXEL)
 #define PIN_NEOPIXEL 48
+#endif
+#elif defined(CONFIG_IDF_TARGET_ESP32S31)
+#ifndef PIN_BOOT
+  #define PIN_BOOT 61
+#endif
+#if not defined(PIN_NEOPIXEL)
+#define PIN_NEOPIXEL 60
 #endif
 #endif
 
